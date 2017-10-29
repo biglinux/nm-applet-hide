@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+package_name=nm-applet-hide
+case "$1" in
+  remove)
+    dpkg-divert --package "$package_name" --rename --remove "/etc/xdg/autostart/nm-applet.desktop"
+    ;;
+  purge)
+    dpkg-divert --package "$package_name" --rename --remove "/etc/xdg/autostart/nm-applet.desktop"
+;;
+esac
+exit 0

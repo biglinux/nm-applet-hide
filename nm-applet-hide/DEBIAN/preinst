@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+package_name=nm-applet-hide
+mkdir -p "/usr/share/dpkgdivert/nm-applet-hide"
+case "$1" in
+  install)
+    dpkg-divert --package "$package_name" --divert "/usr/share/dpkgdivert/nm-applet-hide/etcxdgautostartnm-applet.desktop" --rename "/etc/xdg/autostart/nm-applet.desktop"
+    ;;
+  upgrade)
+if [ "$(dpkg-divert --list "/etc/xdg/autostart/nm-applet.desktop")" = "" ]
+then
+    dpkg-divert --package "$package_name" --divert "/usr/share/dpkgdivert/nm-applet-hide/etcxdgautostartnm-applet.desktop" --rename "/etc/xdg/autostart/nm-applet.desktop"
+fi
+;;
+esac
+exit 0
